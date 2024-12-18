@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create an EC2 instance with Firefox pre-installed
+
+Resources:
+  MySecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access and HTTP access on the inbound port
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          CidrIp: 0.0.0.0/0
+      
+  MyEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      KeyName: !Ref 'Ubunbtu'
+      ImageId: 'ami-0e2c8caa4b6378d8c'  
+      InstanceType: 't2.micro'                  
+      SecurityGroups: 
+        - !Ref 'sg-0e32ca3c3ec831e94' 
+      
+   
+Outputs:
+  InstanceId:
+    Description: The Instance ID
+    Value: !Ref MyEC2Instance
